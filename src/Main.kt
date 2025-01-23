@@ -3,9 +3,18 @@ import classes.Tiempo
 fun main() {
 
     // Instancia de clase tiempo con input del usuario
-    val (hora, minuto, segundo) = pedirHora()
-    val tiempo = Tiempo(hora, minuto, segundo)
-    println(tiempo)
+//    val (hora, minuto, segundo) = pedirHora()
+    val tiempo1 = Tiempo(2,0,0)
+    val tiempo2 = Tiempo(22,0,0)
+    print(tiempo1.esMenorQue(tiempo2))
+    tiempo1.incrementar(tiempo2)
+    print(tiempo1)
+//    println(tiempo)
+//
+//    println(tiempo.comparar2(tiempo2))
+//
+//    tiempo.incrementar(tiempo2)
+//    print(tiempo)
 }
 
 
