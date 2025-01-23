@@ -131,10 +131,11 @@ class Tiempo(var hora: Int, var min: Int, var seg: Int) {
      * @return `true` si el tiempo se decrementó correctamente; `false` si resultó en un tiempo negativo.
      */
     fun decrementar(t: Tiempo): Boolean {
-        if (obtenerSegundos() - t.obtenerSegundos() <= 0) {
-            return false
+        return if (obtenerSegundos() - t.obtenerSegundos() < 0) {
+            false
         } else {
-            return true
+            this.actualizarTiempoConSegundos(t.obtenerSegundos() - this.obtenerSegundos())
+            true
         }
     }
 
@@ -167,32 +168,35 @@ class Tiempo(var hora: Int, var min: Int, var seg: Int) {
      *
      * @param t El objeto `Tiempo` cuyo tiempo será copiado.
      */
-    fun copiar(t:Tiempo) {
+    fun copiar(t:Tiempo): Tiempo {
         hora = t.hora
         min = t.min
         seg = t.seg
+        return t
     }
 
-//    /**
-//     * Suma el tiempo del objeto actual con el tiempo especificado por otro objeto `Tiempo`.
-//     *
-//     * @param t El objeto `Tiempo` cuyo tiempo será sumado.
-//     * @return Un nuevo objeto `Tiempo` con el resultado de la suma, o `null` si el resultado excede 23:59:59.
-//     */
-//    fun sumar(t: Tiempo): Tiempo? {
-//        //TODO: implementar
-//    }
-//
-//    /**
-//     * Resta el tiempo del objeto actual con el tiempo especificado por otro objeto `Tiempo`.
-//     *
-//     * @param t El objeto `Tiempo` cuyo tiempo será restado.
-//     * @return Un nuevo objeto `Tiempo` con el resultado de la resta, o `null` si el resultado es menor que 00:00:00.
-//     */
-//    fun restar(t: Tiempo): Tiempo? {
-//        //TODO: implementar
-//    }
-//
+    /**
+     * Suma el tiempo del objeto actual con el tiempo especificado por otro objeto `Tiempo`.
+     *
+     * @param t El objeto `Tiempo` cuyo tiempo será sumado.
+     * @return Un nuevo objeto `Tiempo` con el resultado de la suma, o `null` si el resultado excede 23:59:59.
+     */
+    fun sumar(t: Tiempo): Tiempo? {
+        val copia = this.copiar()
+        return if (copia.incrementar(t)) copia else null
+    }
+
+    /**
+     * Resta el tiempo del objeto actual con el tiempo especificado por otro objeto `Tiempo`.
+     *
+     * @param t El objeto `Tiempo` cuyo tiempo será restado.
+     * @return Un nuevo objeto `Tiempo` con el resultado de la resta, o `null` si el resultado es menor que 00:00:00.
+     */
+    fun restar(t: Tiempo): Tiempo? {
+        val copia = this.copiar()
+        return if (copia.decrementar(t)) copia else null
+    }
+
     /**
      * Compara si el tiempo almacenado en el objeto actual es mayor que el tiempo especificado por otro objeto `Tiempo`.
      *
