@@ -131,11 +131,14 @@ class Tiempo(var hora: Int, var min: Int, var seg: Int) {
      * @return `true` si el tiempo se decrementó correctamente; `false` si resultó en un tiempo negativo.
      */
     fun decrementar(t: Tiempo): Boolean {
-        return if (obtenerSegundos() - t.obtenerSegundos() < 0) {
-            false
+        val segundosActuales = obtenerSegundos()
+        val segundosADecrementar = t.obtenerSegundos()
+
+        if (segundosActuales < segundosADecrementar) {
+            return false
         } else {
-            this.actualizarTiempoConSegundos(t.obtenerSegundos() - this.obtenerSegundos())
-            true
+            this.actualizarTiempoConSegundos(segundosActuales - segundosADecrementar)
+            return true
         }
     }
 
@@ -146,7 +149,7 @@ class Tiempo(var hora: Int, var min: Int, var seg: Int) {
      * @return `-1` si el tiempo actual es menor que `t`, `0` si son iguales, y `1` si es mayor.
      */
 
-    private fun comparar(t:Tiempo):Int {
+    fun comparar(t:Tiempo):Int {
         return when {
             obtenerSegundos() > t.obtenerSegundos() -> 1
             obtenerSegundos() < t.obtenerSegundos() -> -1
